@@ -2,6 +2,7 @@ export interface Project {
   updatedAt: string;
   skills: string[];
   deployedSiteLink: string;
+  color: string;
   _createdAt: string;
   _rev: string;
   description: string;

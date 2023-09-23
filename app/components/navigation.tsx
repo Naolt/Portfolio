@@ -1,10 +1,13 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import { MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
+import Image from "next/image";
+import React, { useContext, useState } from "react";
+import { MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./button";
 import Link from "next/link";
+import { SectionRefsContext } from "@/context/refsContext";
+
+//import Link from "next/link";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +18,7 @@ function Navigation() {
 
   return (
     <div
-      className={`w-full flex fixed justify-between z-50  ${
+      className={`w-full flex fixed justify-between z-20  ${
         isOpen && "h-screen w-screen items-start"
       }`}
     >
@@ -78,10 +81,32 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ text }) => {
+  const { activeRef } = useContext(SectionRefsContext)!;
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    // get the href and remove everything before the hash (#)
+    const href = e.currentTarget.href;
+    const targetId = href.replace(/.*\#/, "");
+    // get the element by id and use scrollIntoView
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+  const isActive = `${
+    activeRef.current == text
+      ? "underline text-Light-Green text-Light-Green"
+      : ""
+  }`;
   return (
-    <nav className="font-Montserrat font-normal dark:text-Text-Color text-Background text-base uppercase w-fit hover:text-Light-Green transition-all ease-linear cursor-pointer py-2 px-4">
-      <Link href={`/#${text}`}>{text}</Link>
-    </nav>
+    <Link
+      className={`font-Montserrat font-normal dark:text-Text-Color text-Background text-base uppercase w-fit hover:text-Light-Green transition-all ease-linear cursor-pointer py-2 px-4 ${isActive}`}
+      href={`#${text}`}
+      onClick={handleScroll}
+    >
+      {text}
+    </Link>
   );
 };
 

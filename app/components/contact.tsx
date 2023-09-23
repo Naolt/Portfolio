@@ -1,8 +1,24 @@
 import Image from "next/image";
-import React from "react";
-const ContactSection: React.FC = () => {
+import React, { useContext, useEffect } from "react";
+import { motion as m } from "framer-motion";
+import { SectionRefsContext } from "@/context/refsContext";
+
+const ContactSection = () => {
+  const { contactRef, updateActiveSection } = useContext(SectionRefsContext)!;
+
+  useEffect(() => {
+    updateActiveSection(); // Call the function once on component mount
+  }, []);
   return (
-    <div className="w-screen min-h-screen md:h-screen flex flex-col md:flex-row px-5 items-center  md:px-28 snap-center pb-10 ">
+    <m.div
+      ref={contactRef}
+      initial={{ y: "100%" }}
+      animate={{ y: "0%" }}
+      transition={{ duration: 0.75, ease: "easeOut" }}
+      exit={{ opacity: 1 }}
+      id="Contact"
+      className="w-screen min-h-screen md:h-screen flex flex-col md:flex-row px-5 items-center  md:px-28 snap-center pb-10 "
+    >
       {/* Left */}
       <div className="flex flex-col justify-center item-center w-full">
         <h1 className="text-Text-Color font-Montserrat  text-3xl md:text-6xl capitalize font-bold mb-11 text-center md:text-start">
@@ -108,7 +124,7 @@ const ContactSection: React.FC = () => {
           </form>
         </div>
       </div>
-    </div>
+    </m.div>
   );
 };
 

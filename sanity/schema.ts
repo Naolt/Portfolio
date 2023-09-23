@@ -34,10 +34,20 @@ export const schema: { types: SchemaTypeDefinition[] } = {
           title: "Deployed Site Link",
         },
         {
+          type: "url",
+          name: "githubLink",
+          title: "Github Link",
+        },
+        {
           type: "array",
           name: "images",
           title: "Images",
           of: [{ type: "image" }],
+        },
+        {
+          type: "string",
+          name: "color",
+          title: "Color",
         },
       ],
     },
