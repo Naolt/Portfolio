@@ -2,21 +2,14 @@
 import { urlForImage } from "@/sanity/lib/image";
 import { Project } from "@/types";
 import Image from "next/image";
-import React, { useContext, useEffect } from "react";
-import Button from "./button";
+import React from "react";
 import Chip from "./chip";
-import { easeOut, motion as m } from "framer-motion";
+import { motion as m } from "framer-motion";
 import { AiFillGithub, AiFillPlayCircle } from "react-icons/ai";
-import { SectionRefsContext } from "@/context/refsContext";
 
 const ProjectsSection = ({ projects }: { projects: Project[] }) => {
-  const { projectsRef, updateActiveSection } = useContext(SectionRefsContext)!;
-  useEffect(() => {
-    updateActiveSection(); // Call the function once on component mount
-  }, []);
   return (
     <m.div
-      ref={projectsRef}
       initial={{ y: "100%" }}
       animate={{ y: "0%" }}
       transition={{ duration: 0.75, ease: "easeOut" }}

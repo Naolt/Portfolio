@@ -1,17 +1,10 @@
 import Image from "next/image";
 
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import Chip from "./chip";
 import { motion as m } from "framer-motion";
-import { SectionRefsContext } from "@/context/refsContext";
 
 const AboutSection = () => {
-  const { aboutRef, updateActiveSection } = useContext(SectionRefsContext)!;
-
-  useEffect(() => {
-    updateActiveSection(); // Call the function once on component mount
-  }, []);
-
   const skillsAndTools = [
     "HTML",
     "CSS",
@@ -28,7 +21,6 @@ const AboutSection = () => {
   ];
   return (
     <m.section
-      ref={aboutRef}
       initial={{ y: "100%" }}
       animate={{ y: "0%" }}
       transition={{ duration: 0.75, ease: "easeOut" }}

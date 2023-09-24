@@ -16,3 +16,7 @@
   scrollbar-width: none;
   /* Firefox */
 }
+
+.active {
+  color: aquamarine;
+}

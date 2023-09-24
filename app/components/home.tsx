@@ -1,20 +1,12 @@
 import Image from "next/image";
-import React, { useContext, useEffect, useRef } from "react";
+import React from "react";
 import { motion as m } from "framer-motion";
-import { SectionRefsContext } from "@/context/refsContext";
 
 const HomeSection = () => {
-  const { homeRef, updateActiveSection } = useContext(SectionRefsContext)!;
-
-  useEffect(() => {
-    updateActiveSection(); // Call the function once on component mount
-  }, []);
-
   return (
     <m.section
       id="Home"
       className="md:px-48 lg:px-96 h-screen w-screen flex justify-center items-center md:items-start flex-col snap-center overflow-hidden"
-      ref={homeRef}
     >
       <m.div
         className="absolute w-1/2 h-screen top-0 left-0 z-20 bg-Dark-Green"

@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./button";
 import Link from "next/link";
-import { SectionRefsContext } from "@/context/refsContext";
-
 //import Link from "next/link";
 
-function Navigation() {
+function Navigation({ activeSection }: { activeSection: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const closeRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -33,23 +32,24 @@ function Navigation() {
           alt="My Logo"
           className="cursor-pointer"
         />
+
         {/* Navs */}
         <div className="hidden md:flex gap-5 justify-center items-start ">
-          <Nav text="Home" />
-          <Nav text="About" />
-          <Nav text="Projects" />
-          <Nav text="Contact" />
+          <Nav text="Home" activeSection={activeSection} />
+          <Nav text="About" activeSection={activeSection} />
+          <Nav text="Projects" activeSection={activeSection} />
+          <Nav text="Contact" activeSection={activeSection} />
           <Button variant="primary" outlined>
             Resume
           </Button>
 
           <MoonIcon className="w-8 h-8 text-Text-Color pt-1" />
         </div>
-
         <div className="md:hidden">
           <button
             className="text-white focus:outline-none"
             onClick={toggleMenu}
+            ref={closeRef}
           >
             {isOpen ? (
               <XMarkIcon className="w-8 h-8 text-Text-Color pt-1" />
@@ -61,10 +61,18 @@ function Navigation() {
       </div>
       {isOpen && (
         <div className="h-full w-full flex flex-col  gap-5 justify-center items-center bg-Background">
-          <Nav text="Home" />
-          <Nav text="About" />
-          <Nav text="Projects" />
-          <Nav text="Contact" />
+          <Nav text="Home" activeSection={activeSection} closeRef={closeRef} />
+          <Nav text="About" activeSection={activeSection} closeRef={closeRef} />
+          <Nav
+            text="Projects"
+            activeSection={activeSection}
+            closeRef={closeRef}
+          />
+          <Nav
+            text="Contact"
+            activeSection={activeSection}
+            closeRef={closeRef}
+          />
           <Button variant="primary" outlined>
             Resume
           </Button>
@@ -78,13 +86,14 @@ function Navigation() {
 
 interface NavProps {
   text: string;
+  activeSection: string;
+  closeRef?: any;
 }
 
-const Nav: React.FC<NavProps> = ({ text }) => {
-  const { activeRef } = useContext(SectionRefsContext)!;
-
+const Nav: React.FC<NavProps> = ({ text, activeSection, closeRef = null }) => {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
+    if (closeRef) closeRef.current.click();
     // get the href and remove everything before the hash (#)
     const href = e.currentTarget.href;
     const targetId = href.replace(/.*\#/, "");
@@ -95,13 +104,14 @@ const Nav: React.FC<NavProps> = ({ text }) => {
     });
   };
   const isActive = `${
-    activeRef.current == text
-      ? "underline text-Light-Green text-Light-Green"
-      : ""
+    activeSection == text
+      ? "underline dark:text-Light-Green text-Light-Green"
+      : "text-Text-Color"
   }`;
+
   return (
     <Link
-      className={`font-Montserrat font-normal dark:text-Text-Color text-Background text-base uppercase w-fit hover:text-Light-Green transition-all ease-linear cursor-pointer py-2 px-4 ${isActive}`}
+      className={`font-Montserrat font-normal text-base uppercase w-fit hover:text-Light-Green transition-all ease-linear cursor-pointer py-2 px-4 ${isActive}`}
       href={`#${text}`}
       onClick={handleScroll}
     >

@@ -1,17 +1,10 @@
 import Image from "next/image";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { motion as m } from "framer-motion";
-import { SectionRefsContext } from "@/context/refsContext";
 
 const ContactSection = () => {
-  const { contactRef, updateActiveSection } = useContext(SectionRefsContext)!;
-
-  useEffect(() => {
-    updateActiveSection(); // Call the function once on component mount
-  }, []);
   return (
     <m.div
-      ref={contactRef}
       initial={{ y: "100%" }}
       animate={{ y: "0%" }}
       transition={{ duration: 0.75, ease: "easeOut" }}
