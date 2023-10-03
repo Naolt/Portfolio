@@ -4,6 +4,16 @@
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 
+/* Enable dark mode styles */
+
+@media (prefers-color-scheme: dark) {
+  @import "tailwindcss-dark";
+}
+
+* {
+  margin: 0;
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
