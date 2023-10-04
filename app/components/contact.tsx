@@ -1,23 +1,33 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { motion as m } from "framer-motion";
 import { PersonalInfo } from "@/types";
 
-const ContactSection = ({ info }: { info: PersonalInfo }) => {
-  // Define form fields and their initial values
-  const [formData, setFormData] = useState({
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface ContactSectionProps {
+  info: PersonalInfo;
+}
+
+const ContactSection: React.FC<ContactSectionProps> = ({ info }) => {
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
-  console.log("contact", info);
-  // Define a state for handling form submission status
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
-  // Define an event handler for input changes
-  const handleChange = (e) => {
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -25,8 +35,7 @@ const ContactSection = ({ info }: { info: PersonalInfo }) => {
     });
   };
 
-  // Define an event handler for form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -42,10 +51,9 @@ const ContactSection = ({ info }: { info: PersonalInfo }) => {
       if (response.ok) {
         setSubmitted(true);
 
-        // Set a timeout to hide the success message after a certain amount of time (e.g., 5 seconds)
         setTimeout(() => {
-          //setSubmitted(false);
-        }, 15000); // 5000 milliseconds = 5 seconds
+          setSubmitted(false);
+        }, 15000);
       } else {
         alert("Error sending message. Please try again later.");
       }

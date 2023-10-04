@@ -1,18 +1,16 @@
 "use client";
 
 import { getData } from "@/lib/getData";
-import { client } from "@/sanity/lib/client";
-import { Project } from "@/types";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { PersonalInfo, Project } from "@/types";
+import React, { useEffect, useState } from "react";
 import AboutSection from "./components/about";
 import ContactSection from "./components/contact";
-import GlowingEffect from "./components/glowingEffect";
 import HomeSection from "./components/home";
 import ProjectsSection from "./components/projects";
 
 export default function Home() {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [info, setInfo] = useState<any[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [info, setInfo] = useState<PersonalInfo[]>([]);
 
   useEffect(() => {
     async function fetchData() {

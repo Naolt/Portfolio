@@ -3,7 +3,11 @@ import React from "react";
 import { motion as m } from "framer-motion";
 import { PersonalInfo } from "@/types";
 
-const HomeSection = ({ info }: { info: PersonalInfo }) => {
+interface HomeSectionProps {
+  info: PersonalInfo;
+}
+
+const HomeSection: React.FC<HomeSectionProps> = ({ info }) => {
   return (
     <m.section
       id="Home"

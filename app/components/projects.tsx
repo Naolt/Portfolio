@@ -7,7 +7,11 @@ import Chip from "./chip";
 import { motion as m } from "framer-motion";
 import { AiFillGithub, AiFillPlayCircle } from "react-icons/ai";
 
-const ProjectsSection = ({ projects }: { projects: Project[] }) => {
+interface ProjectsSectionProps {
+  projects: Project[];
+}
+
+const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
   console.log("HERE", projects);
   return (
     <m.div
@@ -34,7 +38,7 @@ const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               {/* Project Image */}
               <div className="w-full md:w-[1000px] md:h-[562px] h-fit bg-Primary-Green  visible relative">
                 <Image
-                  src={urlForImage(project.images[0]).url()}
+                  src={urlForImage(project?.images[0]).url() || ""}
                   width={1000}
                   height={705}
                   alt="Project Photo"

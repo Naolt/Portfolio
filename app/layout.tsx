@@ -1,12 +1,8 @@
 "use client";
 
 import "./globals.css";
-import { Inter } from "next/font/google";
-import { AnimatePresence } from "framer-motion";
 import Navigation from "./components/navigation";
 import { useState, useRef, useEffect } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Portfolio",
@@ -17,7 +13,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const scrollable = useRef(null);
+  const scrollable = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("Home");
   const [darkMode, setDarkMode] = useState(false);
 
@@ -31,29 +27,39 @@ export default function RootLayout({
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = scrollable.current.scrollTop;
-      const sections = scrollable.current.children;
+      const currentScrollable = scrollable.current; // Create a variable to hold the current value
+      if (currentScrollable) {
+        const scrollPosition = currentScrollable.scrollTop;
+        const sections = currentScrollable.children;
 
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        const sectionTop = section.offsetTop - 60;
-        const sectionBottom = sectionTop + section.clientHeight;
+        for (let i = 0; i < sections.length; i++) {
+          const section = sections[i] as HTMLElement;
+          const sectionTop = section.offsetTop - 60;
+          const sectionBottom = sectionTop + section.clientHeight;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          if (["Home", "About", "Projects", "Contact"].includes(section.id))
-            setActiveSection(section.id);
-          break;
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            if (["Home", "About", "Projects", "Contact"].includes(section.id)) {
+              setActiveSection(section.id);
+            }
+            break;
+          }
         }
       }
     };
 
-    scrollable.current.addEventListener("scroll", handleScroll);
+    const currentScrollable = scrollable.current; // Create a variable to hold the current value
+    if (currentScrollable) {
+      currentScrollable.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
-      console.log("removing the event listner");
-      scrollable.current.removeEventListener("scroll", handleScroll);
+      if (currentScrollable) {
+        console.log("removing the event listener");
+        currentScrollable.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
+
   useEffect(() => {
     const localDarkMode = JSON.parse(
       localStorage.getItem("darkMode") || "false"

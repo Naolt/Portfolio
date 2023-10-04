@@ -6,7 +6,11 @@ import Chip from "./chip";
 import { motion as m } from "framer-motion";
 import { PersonalInfo } from "@/types";
 
-const AboutSection = ({ info }: { info: PersonalInfo }) => {
+interface AboutSectionProps {
+  info: PersonalInfo;
+}
+
+const AboutSection: React.FC<AboutSectionProps> = ({ info }) => {
   return (
     <m.section
       initial={{ y: "100%" }}
@@ -63,8 +67,8 @@ const AboutSection = ({ info }: { info: PersonalInfo }) => {
             My skills & Tools
           </h3>
           <div className="flex flex-wrap gap-5">
-            {info?.skills.map((skill) => (
-              <Chip key={skill} text={skill} small={false} />
+            {info?.skills.map((skill, index) => (
+              <Chip key={index} text={skill} small={false} />
             ))}
           </div>
         </div>

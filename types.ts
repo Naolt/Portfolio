@@ -9,7 +9,7 @@ export interface Project {
   _createdAt: string;
   description: string;
   title: string;
-  images: Image[]; // Define Image type as needed
+  images: any[]; // Define Image type as needed
   role: string;
   githubLink: string;
 }
